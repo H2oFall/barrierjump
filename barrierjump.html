@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <script src="p5.min.js"></script>
+    <script src="jumper.js"></script>
+    <script src="barrier.js"></script>
+        <script src = "plat.js"></script>
+    <script src = "p5.collide2d.min.js"></script>
+    
+    
+    <style>
+     body{
+        overflow:hidden;
+        margin:0;
+        padding:0;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <script>
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    var jumper = new jumper();
+    var barrier = new barrier();
+    var plat = new plat();
+    var platform = new platform();
+    var hit = false;
+    var hit1 = false;
+    var hit2 = false;
+    function setup() {
+      createCanvas(w,h);
+    }
+    
+    function draw() {
+      background(0);
+      plat.show();
+      platform.show();
+      jumper.show();
+      jumper.update();
+      barrier.show();
+      barrier.update();
+      hit = collideRectCircle(barrier.x,barrier.y,barrier.width,barrier.height,jumper.x, jumper.y,83);
+      hit1 = collideRectCircle(plat.x,plat.y,plat.width,plat.height,jumper.x, jumper.y,100);
+      hit2 = collideRectCircle(platform.x,platform.y,platform.width,platform.height,jumper.x, jumper.y,100);
+      if (barrier.x <= 0-100) {
+     barrier.x = w + barrier.width;
+     barrier.y = Math.floor(Math.random() * h)-10;
+     barrier.show();
+     barrier.update();
+     stop();
+}
+      if (hit === true) {
+        noLoop();
+      }
+      if (hit1 === true) {
+        jumper.velocity = 0;
+        jumper.velocity = -1;
+      }
+      if (hit2 === true) {
+        jumper.velocity = 0;
+        jumper.velocity = -1;
+      }
+    }
+    </script>
+  </body>
+</html>
